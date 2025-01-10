@@ -4,6 +4,7 @@ import argparse
 import re
 import socket
 from urllib.parse import urlparse, urljoin
+import os
 
 # Regular expression to match domains ending with valid TLDs
 tld_regex = re.compile(
@@ -35,7 +36,9 @@ Ox_regex = re.compile(r'\b\w+(?:\.\w+)?\s*\(\s*["\']([^"\']+)["\']\s*,\s*(["\'][
 
 # Load blacklist from hardcoded file
 def load_blacklist():
-    blacklist_file = 'blacklist.txt'
+    # Always load blacklist.txt from the same folder as lazyegg.py
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    blacklist_file = os.path.join(script_dir, 'blacklist.txt')
     with open(blacklist_file, 'r') as f:
         return [line.strip() for line in f.readlines()]
 
